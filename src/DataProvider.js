@@ -17,7 +17,7 @@ function createNode(rowVal, colVal){
         hCost: null, 
         gCost: null, 
         fCost: null,
-        parent: null
+        parent: null,
     };
 }
 

@@ -34,7 +34,11 @@ export function getNeighbors(currentNode, tableData) {
       }
     }
   }
+<<<<<<< Updated upstream
   return neighbors;
+=======
+    return neighbors;
+>>>>>>> Stashed changes
 }
 
 function getDistance(nodeA, nodeB) { 
@@ -72,6 +76,7 @@ export function astar(tableData, setTableData, start, end) {
     let curr = open.get(start.row + "-" + start.col);
     let deleted = "";
 
+<<<<<<< Updated upstream
     open.forEach(element => {
       if(element.fCost < curr.fCost || element.fCost === curr.fCost && element.hCost < curr.hCost) { 
         curr = element;
@@ -85,10 +90,31 @@ export function astar(tableData, setTableData, start, end) {
     if (curr === end) {
       console.log("mission accomplished");
       return reTracePath(start, end);
+=======
+  //add the start node first
+  open.push(startNode);
+  //while we have not reached the end node...
+  while (open.length > 0) {
+
+    //sort the availible nodes by fCost (least fCost to greatest fCost) note: fCost is the sum of the distance to the startNode and the distance to the endNode
+    let sortedOpen = open.sort((a, b) => (a.fCost > b.fCost) ? 1 : (a.fCost < b.fCost) ? -1 : 0);
+    let curr = sortedOpen[0];
+    //remove the node from the open list
+    open.shift();
+
+    //add the currentNode to the already evaluated list
+    closed.push(curr);
+
+    //currentNode is the end node
+    if(curr.hCost === 0){
+      console.log("CurrentNode is End Node");
+      break;
+>>>>>>> Stashed changes
     }
 
     let neighbors = getNeighbors(curr, tableData);
 
+<<<<<<< Updated upstream
     for (let neighbor of neighbors) {
       if (neighbor.className === "Wall" || closed.has(neighbor)) {
         continue;
@@ -104,5 +130,31 @@ export function astar(tableData, setTableData, start, end) {
         }
       }
     }
+=======
+    let bestNodeIndex = 0;
+    //Implement for each loop here:
+    neighbors.forEach((neighbor, neighborNumber, neighbors) => {
+      if(!(neighbor.className === 'wall')){
+        if(neighbor.fCost < neighbors[bestNodeIndex].fCost){
+          bestNodeIndex = neighborNumber;
+          open.push(neighbor);
+        }
+        else if(neighbor.fCost === neighbors[bestNodeIndex].fCost){
+          if(neighbor.gCost < neighbors[bestNodeIndex].gCost){
+            bestNodeIndex = neighborNumber;
+            open.push(neighbor);
+          }
+        } 
+      }
+    })
+    neighbors[bestNodeIndex].parent = curr;
+
+    curr = neighbors[bestNodeIndex];
+    setTableData();
+>>>>>>> Stashed changes
   }
+
+  console.log(tableData.table);
+
+
 }

@@ -3,17 +3,9 @@ import React, { useContext } from "react";
 import { DataContext } from "../DataProvider";
 import "./Visualizer.css";
 import { astar } from "../algorithms/astar";
-import { getNeighbors } from "../algorithms/astar";
-import { yellow } from "@mui/material/colors";
 import { bfs } from "../algorithms/bfs";
 import { dfs } from "../algorithms/dfs";
 import { dijkstra } from "../algorithms/dijkstra";
-/*
-1) Have a main visualize method where we pass in the algo name
-2) implement each algo taking in grid, start, end 
-3) algo runs
-4) call our animation method that lights up shortest path 
-*/
 
 let setStartNode = false;
 let setEndNode = false;
@@ -34,8 +26,6 @@ function updateObjects(table, numRows, numCols) {
       table[row][col].fCost = table[row][col].gCost + table[row][col].fCost;
     }
   }
-
-  //pass in a setTableData function here
 }
 
 export const Visualizer = () => {
@@ -57,8 +47,6 @@ export const Visualizer = () => {
         ].className = "unvisited";
       } else if (nodeType === "Walls") {
         document.getElementById(id).style.backgroundColor = "dodgerblue";
-        //there is a potential issue with getting the 2nd subscript since it can be a value
-        //greater than 1 char ... confirm with michael before making changes
         tableData.table[id.substring(0, id.indexOf('-'))][
           parseInt(id.substring(id.indexOf('-') + 1))
         ].className = "wall";
@@ -146,12 +134,19 @@ export const Visualizer = () => {
       ) {
         continue;
       }
+
+      //made multiple if you want to change colors
       if(algoType.algo === "A*") {
         document.getElementById(
             path[i].row + "-" + path[i].col
           ).style.backgroundColor = "yellow";
       }
       if(algoType.algo === "BFS") {
+        document.getElementById(
+            path[i].row + "-" + path[i].col
+          ).style.backgroundColor = "yellow";
+      }
+      if(algoType.algo === "Dijkstra") {
         document.getElementById(
             path[i].row + "-" + path[i].col
           ).style.backgroundColor = "yellow";
@@ -239,6 +234,7 @@ export const Visualizer = () => {
               stop = 0;
               begin = Date.now();
               path.path = astar(tableData, setTableData, start, end);
+              //path.path = AStar(tableData, start, end);
               stop = Date.now();
               setDate(stop - begin);
               glowUp(path.path);
@@ -260,7 +256,14 @@ export const Visualizer = () => {
               
             } 
             else if (algoType.algo === "Dijkstra") {
-              console.log(algoType.algo);
+              begin = 0; 
+              stop = 0;
+              begin = Date.now();
+              let fakePath = dijkstra(tableData.table, start, end);
+              stop = Date.now();
+              setDate(stop - begin);
+              path.path = getNodesInShortestPathOrder(end);
+              glowUp(path.path);
             }
           }}
         >

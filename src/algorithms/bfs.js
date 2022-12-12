@@ -58,5 +58,4 @@ export function bfs(grid, startNode, finishNode) {
       }
     }
   }
-  //return visitedNodesInOrder;
 }

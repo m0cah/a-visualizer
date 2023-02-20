@@ -16,9 +16,9 @@ export const NavBar = () => {
                 }}>
                     <option value={'None'} defaultValue disabled>Please Choose an Algorithm!</option>
                     <option value={'A*'}>A*</option>
-                    <option value={'DFS'}>DFS</option>
+                    {/* <option value={'DFS'}>DFS</option> */}
                     <option value ={'BFS'}>BFS</option>
-                    <option value ={'Dijkstra'}>Dijkstra</option>
+                    {/* <option value ={'Dijkstra'}>Dijkstra</option> */}
                 </select>
             </Toolbar>
         </AppBar>

@@ -249,7 +249,7 @@ export const Visualizer = () => {
               begin = 0; 
               stop = 0;
               begin = Date.now();
-              bfs(tableData, start, end);
+              await bfs(tableData, start, end);
               stop = Date.now();
               setDate(stop - begin);
               path.path = getNodesInShortestPathOrder(end);

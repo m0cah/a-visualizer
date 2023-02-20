@@ -1,4 +1,6 @@
-export function bfs(grid, startNode, finishNode) {
+const timer = ms => new Promise(res => setTimeout(res,ms));
+
+export async function bfs(grid, startNode, finishNode) {
 
   const visitedNodesInOrder = [];
   let nextNodesStack = [startNode];
@@ -57,6 +59,7 @@ export function bfs(grid, startNode, finishNode) {
         }
       }
     }
+    await timer(20);
   }
-  //return visitedNodesInOrder;
+  // return visitedNodesInOrder;
 }
